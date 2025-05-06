@@ -6,7 +6,7 @@ close all
 
 % reading the original image
 img = imread('images/shapes.png');
-% figure, imshow(img)
+% figure, imshow(img), title('Original image')
 
 % making the rgb image gray
 gray = rgb2gray(img);
