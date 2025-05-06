@@ -1,5 +1,5 @@
 # Shape Recognition
-_(university homework)_
+_(University homework)_
 
 ### Original image
 <img width="853" alt="Geometrical Shapes" src="https://github.com/lazarescu1/shape-recognition/blob/master/images/shapes.png">
