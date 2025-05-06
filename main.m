@@ -2,6 +2,7 @@
 % TEMA 2 %
 
 clc
+clear all
 close all
 
 % reading the original image
@@ -36,3 +37,13 @@ figure, imshow(label_color)
 
 % region props
 props = regionprops(logical(label), 'Area', 'Perimeter', 'Eccentricity', 'Extent', 'BoundingBox', 'Centroid', 'Solidity');
+
+% img_annotated = img;
+% for i = 1 : num_obj
+%     centroid = props(i).Centroid;
+%     if props(i).Solidity > 0.9 && props(i).Eccentricity < 0.2
+%         shape = 'Cerc';
+%     end
+% end
+% img_annotated = insertText(img_annotated, centroid, shape, 'BoxColor', 'white');
+% figure, imshow(img_annotated)
