@@ -5,4 +5,4 @@ _(university homework)_
 <img width="853" alt="Geometrical Shapes" src="https://github.com/lazarescu1/shape-recognition/blob/master/shapes.png">
 
 ### Final image (example)
-<img width="853" alt="Final Image" src="https://github.com/lazarescu1/shape-recognition/blob/master/final_shape_ex.png">
+<img width="853" alt="Final Image" src="https://github.com/lazarescu1/shape-recognition/blob/master/final_image_ex.png">
