@@ -1,8 +1,9 @@
-%%% Tema 2 %%%
-%%% Recunoasterea formelor %%%
+% SHAPE RECOGNITION %
+% TEMA 2 %
 
 clc
-img = imread("1305B_1306A.png");
+close all
+img = imread("shapes.png");
 % figure
 % imshow(img)
 
