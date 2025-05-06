@@ -5,19 +5,34 @@ clc
 close all
 
 % reading the original image
-img = imread("images/shapes.png");
-figure, imshow(img)
+img = imread('images/shapes.png');
+% figure, imshow(img)
 
 % making the rgb image gray
 gray = rgb2gray(img);
-figure, imshow(gray)
+% figure, imshow(gray)
 
 % binarizing the image
-T = graythresh(gray);
+T = 0.89;
 bw = imbinarize(gray, T);
-figure, imshow(bw)
+% figure, imshow(bw)
+
+% imopen
+se = strel('square', 5);
+bw_clean = imopen(bw, se);
+% figure, imshow(bw_clean)
+bw_clean = ~bw_clean;
 
 % getting the edges of the geometrical shapes
-% with the Sobel filter
-edges = edge(bw, 'sobel');
-figure, imshow(edges)
+% using the Canny filter
+edges = edge(bw_clean, 'canny');
+% figure, imshow(edges)
+
+% getting object labels
+[label, num_obj] = bwlabel(bw_clean, 4);
+% verifying if all objects are detected
+label_color = label2rgb(label, @spring, "c", "shuffle");
+figure, imshow(label_color)
+
+% region props
+props = regionprops(logical(label), 'Area', 'Perimeter', 'Eccentricity', 'Extent', 'BoundingBox', 'Centroid', 'Solidity');
