@@ -6,7 +6,7 @@ clear
 close all
 
 % Read the image
-img = imread('images/1301A.png');
+img = imread('images/shapes.png');
 
 % Convert to gray scale
 gray = rgb2gray(img);
