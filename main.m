@@ -2,48 +2,62 @@
 % TEMA 2 %
 
 clc
-clear all
+clear
 close all
 
-% reading the original image
+% Read the image
 img = imread('images/shapes.png');
-% figure, imshow(img), title('Original image')
 
-% making the rgb image gray
+% Convert to gray scale
 gray = rgb2gray(img);
-% figure, imshow(gray)
 
-% binarizing the image
+% Binarize the image
 T = 0.89;
 bw = imbinarize(gray, T);
-% figure, imshow(bw)
 
-% imopen
+% Morphological operations
 se = strel('square', 5);
 bw_clean = imopen(bw, se);
-% figure, imshow(bw_clean)
 bw_clean = ~bw_clean;
 
-% getting the edges of the geometrical shapes
-% using the Canny filter
-edges = edge(bw_clean, 'canny');
-% figure, imshow(edges)
-
-% getting object labels
+% Labeling
 [label, num_obj] = bwlabel(bw_clean, 4);
-% verifying if all objects are detected
 label_color = label2rgb(label, @spring, "c", "shuffle");
-figure, imshow(label_color)
+% figure, imshow(label_color), title('Labeled Regions')
 
-% region props
-props = regionprops(logical(label), 'Area', 'Perimeter', 'Eccentricity', 'Extent', 'BoundingBox', 'Centroid', 'Solidity');
+% Get properties
+props = regionprops(logical(label), 'Area', 'Perimeter', 'Eccentricity', ...
+                    'Extent', 'BoundingBox', 'Centroid', 'Solidity', ...
+                    'EulerNumber', 'Orientation', 'MajorAxisLength', ...
+                    'MinorAxisLength');
 
-% img_annotated = img;
-% for i = 1 : num_obj
-%     centroid = props(i).Centroid;
-%     if props(i).Solidity > 0.9 && props(i).Eccentricity < 0.2
-%         shape = 'Cerc';
-%     end
-% end
-% img_annotated = insertText(img_annotated, centroid, shape, 'BoxColor', 'white');
-% figure, imshow(img_annotated)
+img_annotated = img;
+for i = 1 : num_obj
+    region_mask = label == i;
+
+    if props(i).Eccentricity >= 0.4890 && props(i).Eccentricity <= 0.5050
+        if props(i).EulerNumber == 0
+            shape = 'Triunghi cu gaura';
+        elseif props(i).Orientation == -90
+            shape = 'Triunghi cu varful in jos';
+        else
+            shape = 'Triunghi cu varful in sus';
+        end
+    end
+
+    % B = bwboundaries(region_mask);
+    % boundary = B{1};
+    % tol = 0.01;
+    % simplified = reducepoly(boundary, tol);
+
+    % centroid = props(i).Centroid;
+    % img_annotated = insertText(img_annotated, centroid, shape, ...
+    %     'BoxColor', 'white', 'TextColor', 'black', 'FontSize', 14);
+    % 
+    %  img_annotated = insertShape(img_annotated, 'Rectangle', props(i).BoundingBox, ...
+    %     'Color', 'green', 'LineWidth', 2);
+end
+
+
+imshow(img_annotated);
+title('Detected Shapes');
